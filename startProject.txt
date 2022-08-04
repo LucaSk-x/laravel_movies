@@ -1,0 +1,53 @@
+- Start project laravel
+
+- Collegare GIT -> inizia repo/remotes
+
+- .Env -> Aggoirnare dati DB
+
+- npm -> npm install
+
+- Bootstrap ->
+	in app.scss/'(@import ~bootstrap/dist/css/bootstrap.css)'
+ 	in bootstrap.js/ 'require(bootstrap/dist/js/bootstrap.bundle)'
+
+- npm run dev / npm run watch -> prima volta non va, ripetere la seconda
+
+--------------------------------migration & model-------------------------------
+
+
+- CRUD -> 'php artisan make:model --a Movie'(si riferisce alla tallebba DB Movies, Crea Migration, Controller, Model e seeder)
+
+- Migration -> $table->string('title'); alla fine $table->save() [php artisan migrate//:rollback]
+
+--------------------------------Rotte & view-------------------------------
+
+---------ROTTE---------
+- web.php -> 
+	index   Route::get('/movies', MovieController@index')->name('movie.index');
+	create  Route::get('/movies/create', MovieController@create')->name('movie.create');
+	show    Route::get('/movies/{movie}', MovieController@show')->name('movie.show');
+	store   Route::post('/movies', MovieController@store')->name('movie.store');
+
+	edit    Route::get('/movies/{movie}/edit', MovieController@edit')->name('movie.edit');
+	update  Route::patch/put('/movies/{movie}', MovieController@update')->name('movie.update');
+	destroy Route::delete('/movies/{movie}', 'MOvieController@destroy')->name('movie.destroy');
+
+- Comando per vedere le rotte -> [php artisan route:list]
+
+---------VIEW---------
+-creare i partials/(header, footerer)
+-creare il layout dove importo i partial() importare css e script
+
+-Creare tutte le view -> nella cartella movies/(@extends(layout.layout))
+	-index.blade.php
+	-show.blade.php
+	-create.blade.php
+	-edit.blade.php
+
+---------CONTROLLER------------
+
+-passo i dati dal DB -> $movies = Movie::all() [es. Movie::OrderBy('title', 'asc')->get();]
+
+php artisan make:request UpdateMovieRequest//StoreMovieRequest
+inserisco UpdateMovieRequest come argomento della function Update del MovieController (public function Update(UpdateMovieRequest $Movie))
+inserisco le mie regole di validazione in rules()
